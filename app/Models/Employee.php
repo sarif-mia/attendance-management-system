@@ -3,12 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Model;
 
-class Employee extends Model
+class Employee extends Authenticatable
 {
     use HasFactory, Notifiable;
+
+    public function getAuthPassword()
+    {
+        return $this->password;
+    }
     
     public function getRouteKeyName()
     {
@@ -16,12 +21,12 @@ class Employee extends Model
     }
     protected $table = 'employees';
     protected $fillable = [
-        'name', 'email', 'pin_code'
+        'name', 'email', 'password', 'pin_code', 'position', 'must_change_password'
     ];
 
   
     protected $hidden = [
-        'pin_code', 'remember_token',
+        'password', 'pin_code', 'remember_token',
     ];
 
 
@@ -51,7 +56,37 @@ class Employee extends Model
         return $this->belongsToMany('App\Models\Schedule', 'schedule_employees', 'emp_id', 'schedule_id');
     }
 
+    // Roles pivot for employees
+    public function roles()
+    {
+        return $this->belongsToMany('App\Models\Role', 'role_employees', 'emp_id', 'role_id');
+    }
 
-    
+    public function hasAnyRole($roles)
+    {
+        if (is_array($roles)) {
+            foreach ($roles as $role) {
+                if ($this->hasRole($role)) {
+                    return true;
+                }
+            }
+        } else {
+            if ($this->hasRole($roles)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function hasRole($role)
+    {
+        $roleObj = $this->roles()->first();
+        if ($roleObj && $roleObj->slug === $role) {
+            return true;
+        }
+        return false;
+    }
+
 
 }

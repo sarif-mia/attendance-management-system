@@ -15,16 +15,26 @@ class RoleMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->user() === null) {
+        // Try to get authenticated user from default guard first, then employee guard
+        $user = auth()->user();
+        if (!$user && auth()->guard('employee')->check()) {
+            $user = auth()->guard('employee')->user();
+        }
+
+        if ($user === null) {
             abort(403, 'Unauthorized action.');
         }
 
-
-
         $actions = request()->route()->getAction();
-        $roles = isset($actions['roles']) ? $actions['roles'] : Null;
+        $roles = isset($actions['roles']) ? $actions['roles'] : null;
 
-        if (auth()->user()->hasAnyRole($roles) && $roles !== Null) {
+        // If no roles specified on route, allow access for authenticated users
+        if ($roles === null) {
+            return $next($request);
+        }
+
+        // If the user model provides hasAnyRole, use it; otherwise, deny
+        if (method_exists($user, 'hasAnyRole') && $user->hasAnyRole($roles)) {
             return $next($request);
         }
 

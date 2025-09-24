@@ -3,6 +3,17 @@
 @section('content')
 <div class="container mt-4">
     <h2>Add New Employee</h2>
+    
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
     <form action="{{ route('employees.store') }}" method="POST">
         @csrf
         <div class="form-group">
@@ -18,29 +29,51 @@
             <input type="email" class="form-control" id="email" name="email" required>
         </div>
         <div class="form-group">
-            <label for="password">Temporary Password</label>
+            <label for="password">Temporary Password (Optional)</label>
             <div class="input-group">
-                <input type="password" class="form-control" id="password" name="password" required>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Leave empty to auto-generate">
                 <div class="input-group-append">
                     <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
                         <i class="fa fa-eye" id="eyeIcon"></i>
                     </span>
                 </div>
             </div>
+            <small class="form-text text-muted">If left empty, a secure temporary password will be generated.</small>
         </div>
         <div class="form-group">
-            <label for="pin_code">Pin Code</label>
-            <input type="password" class="form-control" id="pin_code" name="pin_code" required>
+            <label for="pin_code">Pin Code (for Attendance)</label>
+            <div class="input-group">
+                <input type="password" class="form-control" id="pin_code" name="pin_code" required>
+                <div class="input-group-append">
+                    <span class="input-group-text" id="togglePin" style="cursor: pointer;">
+                        <i class="fa fa-eye" id="pinEyeIcon"></i>
+                    </span>
+                </div>
+            </div>
         </div>
+
         <div class="form-group">
-            <label for="device_type">Device Type</label>
-            <select class="form-control" id="device_type" name="device_type_id">
-                <option value="">Select Device Type</option>
-                @foreach(\App\Models\DeviceType::all() as $deviceType)
-                    <option value="{{ $deviceType->id }}">{{ $deviceType->name }}</option>
+            <label for="schedule">Work Schedule</label>
+            <select class="form-control" id="schedule" name="schedule">
+                <option value="">Select Schedule</option>
+                @foreach(\App\Models\Schedule::all() as $schedule)
+                    <option value="{{ $schedule->slug }}">{{ $schedule->time_in }} - {{ $schedule->time_out }}</option>
                 @endforeach
             </select>
+            <small class="form-text text-muted">Optional - You can assign a schedule later</small>
         </div>
+
+        <div class="form-group">
+            <label for="role">Assign Role</label>
+            <select class="form-control" id="role" name="role_id">
+                <option value="">Select Role (default: Employee)</option>
+                @foreach(\App\Models\Role::all() as $role)
+                    <option value="{{ $role->id }}">{{ $role->name }} ({{ $role->slug }})</option>
+                @endforeach
+            </select>
+            <small class="form-text text-muted">Assign a role to control access. If left empty, default employee role will be assigned.</small>
+        </div>
+
         <button type="submit" class="btn btn-primary">Add Employee</button>
     </form>
 </div>

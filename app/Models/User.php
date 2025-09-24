@@ -39,7 +39,9 @@ class User extends Authenticatable
 
     public static function hasRole($role)
     {
-        if (auth()->user()->roles()->first()->slug === $role) {
+        $user = auth()->user();
+        $roleObj = $user ? $user->roles()->first() : null;
+        if ($roleObj && $roleObj->slug === $role) {
             return true;
         }
         return false;

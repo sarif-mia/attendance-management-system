@@ -13,7 +13,7 @@
                 </a>
             </div>
             <div class="account-card-content">
-                <form class="form-horizontal m-t-30" method="POST" action="{{ route('login') }}">
+                <form class="form-horizontal m-t-30" method="POST" action="{{ route('admin.login') }}">
                     @csrf
                     <div class="form-group">
                         <label for="email" class="col-form-label ">{{ __('Email Address') }}</label>
