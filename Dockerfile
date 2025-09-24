@@ -40,5 +40,10 @@ RUN chown -R www-data:www-data /var/www
 # Expose port 10000
 EXPOSE 10000
 
-# Start Laravel server
+# Add entrypoint script for APP_KEY auto-generation
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Start Laravel server with entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
