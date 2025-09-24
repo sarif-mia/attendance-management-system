@@ -43,9 +43,9 @@ A modern, cloud-ready Laravel application for HR, attendance, payroll, and devic
 
 ## Deployment (Render)
 1. Push your code to GitHub
-2. Add `render.yaml` for Render configuration
+2. Ensure `render.yaml` is present and includes all required environment variables
 3. Connect your repo to Render.com and deploy
-4. Set environment variables (APP_KEY, DB, etc.) in Render dashboard
+4. **No manual environment variable setup needed in the Render dashboard—all variables are managed via `render.yaml` for automated deployment.**
 
 ## API Endpoints
 - Authenticated REST API for attendance, leave, payroll (`routes/api.php`)
