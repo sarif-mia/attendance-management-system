@@ -1,4 +1,3 @@
-
 #!/bin/sh
 set -e
 
@@ -11,5 +10,7 @@ fi
 if ! grep -q '^APP_KEY=' .env || grep -q '^APP_KEY=$' .env; then
 	php artisan key:generate
 fi
+
+echo "[entrypoint] starting: $(date)"
 
 exec "$@"
