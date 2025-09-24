@@ -25,6 +25,9 @@ WORKDIR /var/www
 # Copy project files
 COPY . .
 
+# Create cache and storage directories and set permissions
+RUN mkdir -p /var/www/bootstrap/cache /var/www/storage/framework/sessions /var/www/storage/framework/views /var/www/storage/framework/cache && chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+
 # Install PHP dependencies
 RUN composer install --optimize-autoloader --no-dev
 
