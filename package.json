@@ -8,10 +8,11 @@
         "hot": "npx mix watch --hot",
         "prod": "npm run production",
         "production": "npx mix --production",
-    "start": "php artisan serve --host 0.0.0.0 --port 10000"
+        "start": "php artisan serve --host 0.0.0.0 --port 10000",
+        "build": "npm run production"
     },
     "devDependencies": {
-        "axios": "^0.21",
+        "axios": "^1.12.2",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
