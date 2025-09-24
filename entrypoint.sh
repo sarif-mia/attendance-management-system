@@ -14,3 +14,7 @@ fi
 echo "[entrypoint] starting: $(date)"
 
 exec "$@"
+php artisan config:clear
+php artisan cache:clear
+php artisan route:clear
+php artisan serve --host=127.0.0.1 --port=8000

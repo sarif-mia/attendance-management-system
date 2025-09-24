@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8" />
+    <meta charset="utf-8" />
         <title>Attendance Management System</title>
         <meta content="Admin Dashboard" name="description" />
         <meta content="Themesbrand" name="author" />
-        <link rel="shortcut icon" href="assets/images/">
+    <link rel="shortcut icon" href="/assets/images/favicon.ico">
         @include('layouts.head')
   </head>
     <body class="pb-0" >
