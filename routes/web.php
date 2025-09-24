@@ -1,3 +1,6 @@
+
+<?php
+
 // Security Enhancements: Two-Factor Authentication (admin)
 Route::group(['middleware' => ['auth', 'Role'], 'roles' => ['admin']], function () {
     Route::get('/admin/2fa', function () {
@@ -28,7 +31,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/profile/update', '\App\Http\Controllers\ProfileController@update')->name('profile.update');
     Route::post('/profile/password', '\App\Http\Controllers\ProfileController@password')->name('profile.password');
 });
-<?php
 
 
 
