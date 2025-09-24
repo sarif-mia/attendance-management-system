@@ -7,7 +7,8 @@
         "watch-poll": "npx mix watch -- --watch-options-poll=1000",
         "hot": "npx mix watch --hot",
         "prod": "npm run production",
-        "production": "npx mix --production"
+        "production": "npx mix --production",
+    "start": "php artisan serve --host 0.0.0.0 --port 10000"
     },
     "devDependencies": {
         "axios": "^0.21",
